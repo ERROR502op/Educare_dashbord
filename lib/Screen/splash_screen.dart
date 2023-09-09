@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:masys_educare/Screen/getstudent.dart';
+import 'package:masys_educare/Admin/homepage(admin).dart';
+import 'package:masys_educare/Screen/homepage(student).dart';
 import 'package:masys_educare/Screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -35,15 +34,23 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   _navigateScreen() async {
-    var sharedPref = await SharedPreferences.getInstance();
-    var loggedIn = sharedPref.getString("log");
+    var pref = await SharedPreferences.getInstance();
+    var loggedIn = pref.getString("log");
+    var Role = pref.getString("role");
 
     Future.delayed(const Duration(milliseconds: 2000), () {
-      if (loggedIn != null && loggedIn=="log") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const GetStudentscreen()),
-        );
+      if (loggedIn != null && loggedIn == "log") {
+        if (Role == "Parent") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        }else if (Role=="Admin"){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePageAdmin()),
+          );
+        }
       } else {
         Navigator.pushReplacement(
           context,

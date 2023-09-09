@@ -17,7 +17,7 @@ class LectureTimeable extends StatefulWidget {
 }
 
 class _LectureTimeableState extends State<LectureTimeable> {
-  CalendarFormat _calendarFormat = CalendarFormat.week;
+  CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   List<Getonlinelecture> lectures = [];
@@ -30,11 +30,8 @@ class _LectureTimeableState extends State<LectureTimeable> {
   }
 
   Future<void> getOnlineLecture() async {
-    setState(() {});
     SharedPreferences pref = await SharedPreferences.getInstance();
-
     var headId = pref.getInt("Head_Id");
-    // ignore: non_constant_identifier_names
     var ID = pref.getInt("Id");
     var stdId = pref.getString("Std_id");
     var batchId = pref.getString("Batch_id");
@@ -51,7 +48,6 @@ class _LectureTimeableState extends State<LectureTimeable> {
 
     if (response.statusCode == 200) {
       final xmlDoc = xml.XmlDocument.parse(response.body);
-      // ignore: deprecated_member_use
       final dataString = xmlDoc.findAllElements('string').first.text;
       final jsonData = getonlinelectureFromJson(dataString);
 

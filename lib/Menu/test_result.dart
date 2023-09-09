@@ -43,6 +43,7 @@ class _TestResultScreenState extends State<TestResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.red.shade50,
       appBar: AppBar(title: const Text('Test Result')),
       body: isLoading
           ? const Center(
@@ -56,46 +57,52 @@ class _TestResultScreenState extends State<TestResultScreen> {
                   itemCount: testData.length,
                   itemBuilder: (context, index) {
                     final item = testData[index];
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
+                    return Card(
+                      elevation: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Card(
-                              color: Colors.green.shade500,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  item.result,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                            Column(
+                              children: [
+                                Card(
+                                  color: Colors.green.shade500,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      item.result,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Text(
+                                  "${item.marksObtained} / ${item.maxMarks}",
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
                             ),
-                            Text(
-                              "${item.marksObtained} / ${item.maxMarks}",
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            )
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    item.subName,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,fontSize: 18),
+                                  ),
+                                ),
+                                Text(
+                                  "Remark: ${item.resultRemark}",
+                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey.shade700),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                item.subName,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,fontSize: 18),
-                              ),
-                            ),
-                            Text(
-                              "Remark: ${item.resultRemark}",
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey.shade700),
-                            )
-                          ],
-                        ),
-                      ],
+                      ),
                     );
                   },
                 )),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:masys_educare/Model/mytheme.dart';
+import 'package:masys_educare/Admin/adminpanel.dart';
 import 'package:masys_educare/Screen/getstudent.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +33,7 @@ class _PasswordscreenState extends State<Passwordscreen> {
   String? responseData;
 
   @override
-  void initState() {
+  void  initState() {
     super.initState();
     getdata();
     //listenForOTP();
@@ -78,11 +79,20 @@ class _PasswordscreenState extends State<Passwordscreen> {
           // Move the Navigator inside of setState()
           setState(() {
             Future.delayed(const Duration(seconds: 2), () {
+              if(Role =="Parent"){
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GetStudentscreen()),
+                      (route) => false,
+                );
+              }else if (Role =="Admin"){
               Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const GetStudentscreen()),
-                    (route) => false,
+              context,
+              MaterialPageRoute(builder: (context) => AdminPannelscreen()),
+              (route) => false,
               );
+              }
+
             });
           });
         } else {
@@ -97,6 +107,9 @@ class _PasswordscreenState extends State<Passwordscreen> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      setState(() {
+                        isLoading =false;
+                      });
                     },
                     child: const Text('OK'),
                   ),
@@ -212,7 +225,7 @@ class _PasswordscreenState extends State<Passwordscreen> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter password';
-                                } else if (value != "masys@123") {
+                                } else if (value != "masys@123" && value != "admin@123") {
                                   return 'Enter correct Password "masys@123"';
                                 }
                                 return null; // No validation error

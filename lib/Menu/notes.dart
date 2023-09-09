@@ -4,7 +4,7 @@ import 'package:flutter_downloader/flutter_downloader.dart'; // Import the flutt
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:xml/xml.dart' as xml;
+
 import 'package:http/http.dart' as http;
 import '../Webservice model/notesdata.dart';
 import 'dart:io';
@@ -23,32 +23,22 @@ class _NotesscreenState extends State<Notesscreen> {
     fetchNotes();
   }
 
-  List<NotesData> notes = [];
+  List<Notes> notes = [];
 
   Future<void> fetchNotes() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var headId = pref.getInt("Head_Id");
-    var ID = pref.getInt("Id");
-    var stdId = pref.getString("Std_id");
-    var batchId = pref.getString("Batch_id");
+    var notesid = pref.getString("notesid");
 
-    const url = "https://masyseducare.com/masyseducarestudents.asmx/Notes";
+    const url = "https://masyseducare.com/masyseducarestudents.asmx/GetNotesSubjectwise";
     final body = {
-      "Head_Id": headId.toString(),
-      "Subhead_Id": ID.toString(),
-      "Std_Id": stdId,
-      "Batch_Id": batchId,
+      "Sub_Id" : notesid.toString()
     };
+
     final response = await http.post(Uri.parse(url), body: body);
-
     if (response.statusCode == 200) {
-      final xmlDoc = xml.XmlDocument.parse(response.body);
-      final dataString = xmlDoc.findAllElements('string').first.text;
-      final jsonData = notesDataFromJson(dataString);
-
       setState(() {
-        notes = jsonData;
+        notes = notesFromJson(response.body);
       });
     }
   }
@@ -174,7 +164,7 @@ class _NotesscreenState extends State<Notesscreen> {
     return Scaffold(
       backgroundColor: Colors.red.shade50,
       appBar: AppBar(
-        title: const Text('Notes Screen'),
+        title: const Text('Notes'),
       ),
       body: notes.isEmpty
           ? const Center(
@@ -225,15 +215,15 @@ class _NotesscreenState extends State<Notesscreen> {
                           children: [
                             SizedBox(
                               height: MediaQuery.of(context).size.width * 0.10,
-                              child: Image.asset("assets/folder.png"),
+                              child: Image.asset("assets/Icon/pdf.png"),
                             ),
                             Expanded(
                               child: ListTile(
                                 title: Text(
-                                  note.subName,
+                                  note.title,
                                   style: const TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                subtitle: Text(note.title),
+                                subtitle: Text(note.subName),
                                 trailing: const Icon(
                                   Icons.download_for_offline,
                                   color: Colors.green,

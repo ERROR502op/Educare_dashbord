@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:masys_educare/Webservice%20model/getrcircular.dart';
-
-// ignore: unused_import
-import 'package:masys_educare/Webservice%20model/notice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
@@ -61,10 +58,8 @@ class _EmergencyscreenState extends State<Emergencyscreen> {
     final originalFormat = DateFormat('dd/MM/yyyy');
     final newFormat = DateFormat(
         'dd MMM', 'en_US'); // 'en_US' locale for English month abbreviation
-
     final date = originalFormat.parse(inputDate);
     final formattedDate = newFormat.format(date);
-
     return formattedDate;
   }
 
@@ -112,15 +107,20 @@ class _EmergencyscreenState extends State<Emergencyscreen> {
                                     ),
                                   ),
                                 ),
-                                Text("🎙️",style: TextStyle(fontSize: 35),)
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                    height: 50,
+                                    child: Image.asset("assets/Icon/mic.png"))
                               ],
                             ),
                             Text(
                               circular[index].desc,
                               style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                 ),
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,

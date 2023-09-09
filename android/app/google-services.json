@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "297793343454",
+    "project_id": "masys-educare",
+    "storage_bucket": "masys-educare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297793343454:android:8a7687791377d962ea174f",
+        "android_client_info": {
+          "package_name": "com.example.masys_educare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297793343454-j4441d85bh9b6h76ggas5u2s2qvgapm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf92md9pgpVsCShzyK4BnLnL7G_cw1NHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297793343454-j4441d85bh9b6h76ggas5u2s2qvgapm7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "297793343454-e00s6l3mib5non5q02ph3b45ap11r55d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.masysEducare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

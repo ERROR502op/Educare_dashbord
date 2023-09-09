@@ -42,14 +42,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
     const url =
         "https://masyseducare.com/masyseducarestudents.asmx/GenerateOTP";
-    final body = {
-      "Mobile":phoneController.text,
+    final studentbody = {
+      "Mobile": phoneController.text,
       "role": selectedRole.toString(),
     };
-    final response = await http.post(Uri.parse(url), body: body);
+    final adminbody = {
+      "Mobile": phoneController.text,
+      "role": selectedRole.toString(),
+    };
+    final studentresponse = await http.post(Uri.parse(url), body: studentbody);
+    final adminresponse = await http.post(Uri.parse(url), body: adminbody);
 
-    if (response.statusCode == 200) {
-      final responseBody = response.body;
+    if (studentresponse.statusCode == 200 || adminresponse.statusCode == 200) {
+      final responseBody = studentresponse.body;
       final xmlDocument = xml.XmlDocument.parse(responseBody);
       // ignore: deprecated_member_use
       final xmlText = xmlDocument.findAllElements('string').first.text;
@@ -71,23 +76,50 @@ class _LoginScreenState extends State<LoginScreen> {
                   content: const SingleChildScrollView(
                     child: ListBody(
                       children: <Widget>[
-                        Text('It is important that you understand what information app collects and uses.\n '),
-                        Text('App uses collected information for the following general purposes: products and services provision, billing, identification and authentication, services improvement, contact, and research.'),
-                        Text("Name",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),),
-                        Text("Name to establish the identity of users and maintain their accounts."),
+                        Text(
+                            'It is important that you understand what information app collects and uses.\n '),
+                        Text(
+                            'App uses collected information for the following general purposes: products and services provision, billing, identification and authentication, services improvement, contact, and research.'),
+                        Text(
+                          "Name",
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                            "Name to establish the identity of users and maintain their accounts."),
                         Divider(),
-                        Text("Phone Number",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),),
+                        Text(
+                          "Phone Number",
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.bold),
+                        ),
 
-                        Text("App uses Phone number for login purposes and to show them on the profile or to contact you."),
+                        Text(
+                            "App uses Phone number for login purposes and to show them on the profile or to contact you."),
                         Divider(),
-                        Text("Images And Videos",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),),
+                        Text(
+                          "Images And Videos",
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.bold),
+                        ),
 
-                        Text("We collect User images in some cases as mandated to show them on the profile. We do not collect video files."),
+                        Text(
+                            "We collect User images in some cases as mandated to show them on the profile. We do not collect video files."),
                         Divider(),
-                        Text("Flies and Documents",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.bold),),
-                        Text("PDFs - We collect user file in PDF format. We do not collect any other files."),
+                        Text(
+                          "Flies and Documents",
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                            "PDFs - We collect user file in PDF format. We do not collect any other files."),
                         Divider(),
-                        Text("Important: Please be assured that the app does not collect or share any of your personal or sensitive data."),
+                        Text(
+                            "Important: Please be assured that the app does not collect or share any of your personal or sensitive data."),
                         // Add more Text widgets to display your privacy policy content
                       ],
                     ),
@@ -95,8 +127,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   actions: <Widget>[
                     TextButton(
                       style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.purple.shade900), // Background color
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            Colors.white), // Text color
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.purple.shade900), // Background color
                       ),
                       child: const Text('I Agree'),
                       onPressed: () {
@@ -107,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               phonenumber: phoneController.text,
                             ),
                           ),
-                        );// Close the dialog
+                        ); // Close the dialog
                       },
                     ),
                     TextButton(
@@ -132,15 +166,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-
-                      // Refresh the screen by pushing a replacement
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              LoginScreen(key: _loginScreenStateKey),
-                        ),
-                      );
+                      setState(() {
+                        isLoading = false;
+                      });
                     },
                     child: const Text('OK'),
                   ),
@@ -230,37 +258,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 10), //
-                      child: TypeAheadFormField<String>(
-                        textFieldConfiguration: TextFieldConfiguration(
-                          controller: TextEditingController(text: selectedRole),
-                          decoration: const InputDecoration(
-                              labelText: 'Select Role',
-                              // Update the label text
-                              border: InputBorder.none),
-                          keyboardType: TextInputType.none,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      //
+                      child: DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(
+                          labelText: 'Select Role',
+
                         ),
-                        suggestionsCallback: (pattern) {
-                          return roleList.where((role) => role
-                              .toLowerCase()
-                              .contains(pattern.toLowerCase()));
-                        },
-                        itemBuilder: (context, suggestion) {
-                          return ListTile(
-                            title: Text(suggestion),
+                        value: selectedRole,
+                        items: roleList.map((role) {
+                          return DropdownMenuItem<String>(
+                            value: role,
+                            child: Text(role),
                           );
-                        },
-                        onSuggestionSelected: (suggestion) {
+                        }).toList(),
+                        onChanged: (newValue) {
                           setState(() {
-                            selectedRole = suggestion;
+                            selectedRole = newValue;
                           });
                         },
-                        noItemsFoundBuilder: (context) {
-                          return const ListTile(
-                            title: Text('No roles found'),
-                          );
-                        },
-                        hideOnEmpty: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Role selection is required'; // Validation error message
@@ -268,6 +284,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null; // No validation error
                         },
                       ),
+
                     ),
                     const SizedBox(height: 20),
                     RichText(

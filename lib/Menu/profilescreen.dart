@@ -7,9 +7,10 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Student Profile'),
       ),
-      body: const Center(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
               radius: 80,
@@ -32,10 +33,42 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
+            // Additional Profile Information
+            _buildProfileInfo("Email", "john.doe@example.com"), // Replace with actual data
+            SizedBox(height: 10),
+            _buildProfileInfo("Phone", "+1 (123) 456-7890"), // Replace with actual data
+            SizedBox(height: 20),
             // Add other profile information or actions here
+            ElevatedButton(
+              onPressed: () {
+                // Add action here
+              },
+              child: Text('Edit Profile'),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildProfileInfo(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          label + ": ",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey,
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ],
     );
   }
 }

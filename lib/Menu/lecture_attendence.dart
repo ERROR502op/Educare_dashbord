@@ -19,7 +19,7 @@ class LectureAttendancescreen extends StatefulWidget {
 }
 
 class _LectureAttendancescreenState extends State<LectureAttendancescreen> {
-  CalendarFormat _calendarFormat = CalendarFormat.week;
+  CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   List<LecPresent> lecattendace = [];

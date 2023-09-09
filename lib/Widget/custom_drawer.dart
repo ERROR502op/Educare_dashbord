@@ -17,7 +17,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
   bool isLoading = false;
   String? studentname;
 
-  // ignore: non_constant_identifier_names
   String? Id;
   String? batchname;
   String? stdname;
@@ -46,6 +45,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     batchname= preferences.getString("Batch_Name");
 
   }
+
   void logout(BuildContext context) async {
 
     bool confirmLogout = await showDialog(

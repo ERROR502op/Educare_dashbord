@@ -1,0 +1,249 @@
+// To parse this JSON data, do
+//
+//     final contactstudent = contactstudentFromJson(jsonString);
+
+import 'package:meta/meta.dart';
+import 'dart:convert';
+
+List<Contactstudent> contactstudentFromJson(String str) =>
+    List<Contactstudent>.from(
+        json.decode(str).map((x) => Contactstudent.fromJson(x)));
+
+String contactstudentToJson(List<Contactstudent> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class Contactstudent {
+  int id;
+  int uuid;
+  dynamic studentId;
+  String firstName;
+  String middleName;
+  String lastName;
+  int headId;
+  String headName;
+  dynamic subheadId;
+  dynamic subheadName;
+  String stdId;
+  String stdName;
+  String batchId;
+  String batchName;
+  String address;
+  String mobileForSms;
+  dynamic mobile2;
+  dynamic email;
+  dynamic dob;
+  String gender;
+  dynamic relegion;
+  dynamic bloodGroup;
+  dynamic caste;
+  dynamic formNo;
+  String fatherName;
+  String fatherMobile;
+  String motherName;
+  String motherMobile;
+  String latestQualification;
+  String qualificationResult;
+  String schoolCollege;
+  dynamic telephone;
+  dynamic parentEmail;
+  dynamic fatherOffAddr;
+  dynamic username;
+  dynamic password;
+  dynamic dateAdded;
+  dynamic status;
+  dynamic lastLoginAt;
+  dynamic gcm;
+  dynamic otp;
+  dynamic dtsApplicable;
+  dynamic insatallmentSet;
+  dynamic parentId;
+  dynamic isCombo;
+  dynamic academicYear;
+  dynamic admissionStatus;
+  dynamic isBatchSet;
+  dynamic boardId;
+  dynamic boardName;
+  dynamic parentEmail2;
+  dynamic motherOffAddress;
+  dynamic courseId;
+  dynamic courseName;
+  dynamic orgId;
+  dynamic studentIdNum;
+
+  Contactstudent({
+    required this.id,
+    required this.uuid,
+    required this.studentId,
+    required this.firstName,
+    required this.middleName,
+    required this.lastName,
+    required this.headId,
+    required this.headName,
+    required this.subheadId,
+    required this.subheadName,
+    required this.stdId,
+    required this.stdName,
+    required this.batchId,
+    required this.batchName,
+    required this.address,
+    required this.mobileForSms,
+    required this.mobile2,
+    required this.email,
+    required this.dob,
+    required this.gender,
+    required this.relegion,
+    required this.bloodGroup,
+    required this.caste,
+    required this.formNo,
+    required this.fatherName,
+    required this.fatherMobile,
+    required this.motherName,
+    required this.motherMobile,
+    required this.latestQualification,
+    required this.qualificationResult,
+    required this.schoolCollege,
+    required this.telephone,
+    required this.parentEmail,
+    required this.fatherOffAddr,
+    required this.username,
+    required this.password,
+    required this.dateAdded,
+    required this.status,
+    required this.lastLoginAt,
+    required this.gcm,
+    required this.otp,
+    required this.dtsApplicable,
+    required this.insatallmentSet,
+    required this.parentId,
+    required this.isCombo,
+    required this.academicYear,
+    required this.admissionStatus,
+    required this.isBatchSet,
+    required this.boardId,
+    required this.boardName,
+    required this.parentEmail2,
+    required this.motherOffAddress,
+    required this.courseId,
+    required this.courseName,
+    required this.orgId,
+    required this.studentIdNum,
+  });
+
+  factory Contactstudent.fromJson(Map<String, dynamic> json) => Contactstudent(
+        id: json["ID"],
+        uuid: json["UUID"],
+        studentId: json["Student_Id"],
+        firstName: json["First_Name"],
+        middleName: json["Middle_Name"],
+        lastName: json["Last_Name"],
+        headId: json["Head_Id"],
+        headName: json["Head_Name"],
+        subheadId: json["Subhead_Id"],
+        subheadName: json["Subhead_Name"],
+        stdId: json["Std_Id"],
+        stdName: json["Std_Name"],
+        batchId: json["Batch_ID"],
+        batchName: json["Batch_Name"],
+        address: json["Address"],
+        mobileForSms: json["Mobile_For_SMS"],
+        mobile2: json["Mobile2"],
+        email: json["Email"],
+        dob: json["DOB"],
+        gender: json["Gender"],
+        relegion: json["Relegion"],
+        bloodGroup: json["Blood_Group"],
+        caste: json["Caste"],
+        formNo: json["Form_No"],
+        fatherName: json["Father_Name"],
+        fatherMobile: json["Father_Mobile"],
+        motherName: json["Mother_Name"],
+        motherMobile: json["Mother_Mobile"],
+        latestQualification: json["Latest_Qualification"],
+        qualificationResult: json["Qualification_Result"],
+        schoolCollege: json["School_College"],
+        telephone: json["Telephone"],
+        parentEmail: json["Parent_Email"],
+        fatherOffAddr: json["Father_Off_Addr"],
+        username: json["Username"],
+        password: json["Password"],
+        dateAdded: json["Date_Added"],
+        status: json["Status"],
+        lastLoginAt: json["Last_Login_At"],
+        gcm: json["GCM"],
+        otp: json["OTP"],
+        dtsApplicable: json["DTS_Applicable"],
+        insatallmentSet: json["Insatallment_Set"],
+        parentId: json["Parent_Id"],
+        isCombo: json["Is_Combo"],
+        academicYear: json["Academic_Year"],
+        admissionStatus: json["Admission_Status"],
+        isBatchSet: json["Is_Batch_Set"],
+        boardId: json["Board_Id"],
+        boardName: json["Board_Name"],
+        parentEmail2: json["Parent_Email2"],
+        motherOffAddress: json["Mother_Off_Address"],
+        courseId: json["Course_ID"],
+        courseName: json["Course_Name"],
+        orgId: json["Org_Id"],
+        studentIdNum: json["Student_Id_Num"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "UUID": uuid,
+        "Student_Id": studentId,
+        "First_Name": firstName,
+        "Middle_Name": middleName,
+        "Last_Name": lastName,
+        "Head_Id": headId,
+        "Head_Name": headName,
+        "Subhead_Id": subheadId,
+        "Subhead_Name": subheadName,
+        "Std_Id": stdId,
+        "Std_Name": stdName,
+        "Batch_ID": batchId,
+        "Batch_Name": batchName,
+        "Address": address,
+        "Mobile_For_SMS": mobileForSms,
+        "Mobile2": mobile2,
+        "Email": email,
+        "DOB": dob,
+        "Gender": gender,
+        "Relegion": relegion,
+        "Blood_Group": bloodGroup,
+        "Caste": caste,
+        "Form_No": formNo,
+        "Father_Name": fatherName,
+        "Father_Mobile": fatherMobile,
+        "Mother_Name": motherName,
+        "Mother_Mobile": motherMobile,
+        "Latest_Qualification": latestQualification,
+        "Qualification_Result": qualificationResult,
+        "School_College": schoolCollege,
+        "Telephone": telephone,
+        "Parent_Email": parentEmail,
+        "Father_Off_Addr": fatherOffAddr,
+        "Username": username,
+        "Password": password,
+        "Date_Added": dateAdded,
+        "Status": status,
+        "Last_Login_At": lastLoginAt,
+        "GCM": gcm,
+        "OTP": otp,
+        "DTS_Applicable": dtsApplicable,
+        "Insatallment_Set": insatallmentSet,
+        "Parent_Id": parentId,
+        "Is_Combo": isCombo,
+        "Academic_Year": academicYear,
+        "Admission_Status": admissionStatus,
+        "Is_Batch_Set": isBatchSet,
+        "Board_Id": boardId,
+        "Board_Name": boardName,
+        "Parent_Email2": parentEmail2,
+        "Mother_Off_Address": motherOffAddress,
+        "Course_ID": courseId,
+        "Course_Name": courseName,
+        "Org_Id": orgId,
+        "Student_Id_Num": studentIdNum,
+      };
+}

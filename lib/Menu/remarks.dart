@@ -27,7 +27,6 @@ class _RemarksScreenState extends State<RemarksScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     // ignore: non_constant_identifier_names
     var Id = pref.getInt("Id");
-
     const url = "https://masyseducare.com/masyseducarestudents.asmx/Remarks";
     final body = {
       "ID":Id.toString(),
@@ -36,7 +35,7 @@ class _RemarksScreenState extends State<RemarksScreen> {
 
     if (response.statusCode == 200) {
       final xmlDoc = xml.XmlDocument.parse(response.body);
-      // ignore: deprecated_member_use
+
       final dataString = xmlDoc.findAllElements('string').first.text;
       final jsonData = remarkDataFromJson(dataString);
 
@@ -45,6 +44,7 @@ class _RemarksScreenState extends State<RemarksScreen> {
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,6 @@ class _RemarksScreenState extends State<RemarksScreen> {
       return Scaffold(
         backgroundColor: Colors.red.shade50,
         appBar: AppBar(
-
           title: const Text('Remarks'),
         ),
         body: ListView.builder(
@@ -101,13 +100,9 @@ class _RemarksScreenState extends State<RemarksScreen> {
                 ),
               ),
             );
-
           },
         ),
       );
     }
   }
-
 }
-
-

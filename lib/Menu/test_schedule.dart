@@ -56,6 +56,7 @@ class _TestSchedulescreenState extends State<TestSchedulescreen> {
 
       setState(() {
         testData = jsonData;
+
       });
     }
   }
@@ -66,10 +67,18 @@ class _TestSchedulescreenState extends State<TestSchedulescreen> {
 
     final date = originalFormat.parseStrict(inputDate); // Use parseStrict
     final formattedDate = newFormat.format(date);
+
     return formattedDate;
   }
 
-
+  List<DateTime> getTestDates() {
+    List<DateTime> testDates = [];
+    for (final test in testData) {
+      final testDate = DateFormat('dd/MM/yyyy').parse(test.dateText);
+      testDates.add(testDate);
+    }
+    return testDates;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +86,8 @@ class _TestSchedulescreenState extends State<TestSchedulescreen> {
     final DateTime firstSelectableDate =
         currentDate.subtract(const Duration(days: 180 + 30 * 6));
     final DateTime initialDate = _selectedDate;
-   // Get the list of test dates
+    final List<DateTime> testDates =
+        getTestDates(); // Get the list of test dates
 
     return Scaffold(
       backgroundColor: Colors.red.shade50,
@@ -89,6 +99,7 @@ class _TestSchedulescreenState extends State<TestSchedulescreen> {
           CalendarTimeline(
             initialDate: initialDate,
             firstDate: firstSelectableDate,
+            // Subtract 6 months and 30 days for previous 6 months
             lastDate: currentDate.add(const Duration(days: 365)),
             onDateSelected: (date) {
               setState(() {
@@ -99,7 +110,7 @@ class _TestSchedulescreenState extends State<TestSchedulescreen> {
             monthColor: Colors.blue.shade900,
             dayColor: Colors.teal[200],
             activeDayColor: Colors.white,
-
+            activeBackgroundDayColor: Colors.blue,
             dotsColor: Colors.white,
           ),
           const Divider(),
@@ -120,6 +131,7 @@ class _TestSchedulescreenState extends State<TestSchedulescreen> {
                         final test = testData[index];
                         final testDate = DateFormat('dd/MM/yyyy')
                             .parse(test.dateText); // Parse test date from string
+
                         if (_selectedDate.isAtSameMomentAs(testDate)) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,8 +210,7 @@ class _TestSchedulescreenState extends State<TestSchedulescreen> {
                             ],
                           );
                         }
-                        return
-                          const SizedBox.shrink(); // Return an empty widget
+                        return const SizedBox.shrink(); // Return an empty widget
                       },
                     ),
                   )
